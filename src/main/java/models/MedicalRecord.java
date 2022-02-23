@@ -8,19 +8,19 @@ public class MedicalRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "person_fk")
-    Person person;
+    private Person person;
 
-    String birthdate;
+    private String birthdate;
 
+    @ManyToMany
+    private List<String> medications;
 
-    List<String> medications;
-
-
-    List<String> allergies;
+    @ManyToMany
+    private List<String> allergies;
 
     public MedicalRecord() {
     }

@@ -10,11 +10,10 @@ public class Firestation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "address")
     private List<Address> addresses;
 
     private int station;
-
 
     public Firestation() {
     }

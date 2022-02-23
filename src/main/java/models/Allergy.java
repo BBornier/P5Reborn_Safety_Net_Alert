@@ -1,12 +1,19 @@
 package models;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Allergy {
 
-    Long id;
-    String allergy;
-    List<MedicalRecord> medicalRecords;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String allergy;
+
+    @ManyToMany
+    private List<MedicalRecord> medicalRecords;
 
     public Allergy() {
     }
