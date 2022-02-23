@@ -1,16 +1,29 @@
 package models;
 
+import javax.persistence.*;
+
+@Entity
 public class Person {
 
-    Long id;
-    String firstName;
-    String lastName;
-    Address address;
-    String city;
-    String zip;
-    String phone;
-    String email;
-    MedicalRecord medicalRecord;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String city;
+    private String zip;
+    private String phone;
+    private String email;
+
+    @ManyToOne
+    @JoinTable(name = "address_person",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private Address address;
+
+    @OneToOne
+    @JoinColumn(name = "medicalrecord_fk")
+    private MedicalRecord medicalRecord;
 
 
     public Person() {
@@ -27,7 +40,6 @@ public class Person {
         this.email = email;
         this.medicalRecord = medicalRecord;
     }
-
 
 
     public Long getId() {

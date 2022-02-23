@@ -1,12 +1,19 @@
 package models;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Firestation {
 
-    Long id;
-    List<Address> addresses;
-    int station;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToMany
+    private List<Address> addresses;
+
+    private int station;
 
 
     public Firestation() {

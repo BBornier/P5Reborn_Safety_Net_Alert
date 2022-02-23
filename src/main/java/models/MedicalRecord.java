@@ -1,13 +1,25 @@
 package models;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class MedicalRecord {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @OneToOne
+    @JoinColumn(name = "person_fk")
     Person person;
+
     String birthdate;
+
+
     List<String> medications;
+
+
     List<String> allergies;
 
     public MedicalRecord() {

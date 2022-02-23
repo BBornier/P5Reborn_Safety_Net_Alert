@@ -1,12 +1,20 @@
 package models;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Address {
 
-    Long id;
-    String address;
-    List<Firestation> firestations;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToMany
+    private List<Firestation> firestations;
+
+    private String address;
 
     public Address() {
     }
