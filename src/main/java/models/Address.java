@@ -1,7 +1,9 @@
 package models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Address {
@@ -10,12 +12,14 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "addresses")
     private List<Firestation> firestations;
 
+    @Column(nullable = false, unique = true)
     private String address;
 
     public Address() {
+        this.firestations = new ArrayList<>();
     }
 
     public Address(Long id, String address, List<Firestation> firestations) {
@@ -55,5 +59,18 @@ public class Address {
                 ", address='" + address + '\'' +
                 ", firestations=" + firestations +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address1 = (Address) o;
+        return Objects.equals(id, address1.id) && Objects.equals(firestations, address1.firestations) && Objects.equals(address, address1.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firestations, address);
     }
 }

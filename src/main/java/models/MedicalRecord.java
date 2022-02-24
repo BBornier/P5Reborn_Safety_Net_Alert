@@ -10,8 +10,7 @@ public class MedicalRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "person_fk")
+    @OneToOne(optional = false)
     private Person person;
 
     private String birthdate;

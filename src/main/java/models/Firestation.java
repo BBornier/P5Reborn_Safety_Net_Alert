@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,12 +11,14 @@ public class Firestation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "address")
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Address> addresses;
 
+    @Column(nullable = false, unique = true)
     private int station;
 
     public Firestation() {
+        this.addresses = new ArrayList<>();
     }
 
     public Firestation(Long id, List<Address> addresses, int station) {

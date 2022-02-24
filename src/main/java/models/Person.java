@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Person {
@@ -8,28 +9,37 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false)
     private String city;
+
+    @Column(nullable = false)
     private String zip;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Column(nullable = false)
     private String email;
 
     @ManyToOne
-    @JoinTable(name = "address_person",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    @JoinColumn(nullable = false)
     private Address address;
 
-    @OneToOne
-    @JoinColumn(name = "medicalrecord_fk")
+    @OneToOne(mappedBy = "person", cascade = CascadeType.REMOVE, optional = true) // à voir avec All ?
     private MedicalRecord medicalRecord;
 
 
     public Person() {
     }
 
-    public Person(Long id, String firstName, String lastName, Address address, String city, String zip, String phone, String email, MedicalRecord medicalRecord) {
+    public Person(Long id, String firstName, String lastName, Address address, String city, String zip, String phone, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,7 +48,6 @@ public class Person {
         this.zip = zip;
         this.phone = phone;
         this.email = email;
-        this.medicalRecord = medicalRecord;
     }
 
 
@@ -127,5 +136,18 @@ public class Person {
                 ", email='" + email + '\'' +
                 ", medicalRecord=" + medicalRecord +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(city, person.city) && Objects.equals(zip, person.zip) && Objects.equals(phone, person.phone) && Objects.equals(email, person.email) && Objects.equals(address, person.address) && Objects.equals(medicalRecord, person.medicalRecord);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, city, zip, phone, email, address, medicalRecord);
     }
 }
